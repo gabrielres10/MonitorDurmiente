@@ -29,6 +29,6 @@ Si deseas contribuir a este proyecto, siéntete libre de bifurcar este repositor
 
 Autores:
 
-Gabriel Restrepo
-Luis Fernando Botero
-Juan Camilo González
+Gabriel Restrepo,
+Luis Fernando Botero,
+Juan Camilo González.
