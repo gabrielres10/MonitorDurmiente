@@ -1,12 +1,15 @@
-import java.util.Random;
-import java.util.concurrent.Semaphore;
+import java.util.Random;                // Importar la clase Random
+import java.util.concurrent.Semaphore;  // Importar la clase Semaphore
 
+/**
+ * Clase que representa un estudiante
+ */
 public class Estudiante extends Thread{
-    private Semaphore silla1;
-    private Semaphore silla2;    
-	private Semaphore silla3; 
-    private Semaphore sillaMonitor; 
-    private String nombre;      
+    private Semaphore silla1;           // Silla 1 de la monitoria
+    private Semaphore silla2;           // Silla 2 de la monitoria
+	private Semaphore silla3;           // Silla 3 de la monitoria
+    private Semaphore sillaMonitor;     // Silla del monitor
+    private String nombre;              // Nombre del estudiante
 	
 	// Constructor de la clase. Inicializa todos los datos requeridos
 	public Estudiante(Semaphore sillaMonitor, Semaphore silla1, Semaphore silla2, Semaphore silla3, String nombre) {
@@ -18,29 +21,25 @@ public class Estudiante extends Thread{
 	}
 	
 	// Método principal del hilo
+    @Override
 	public void run() {
 		// Correr continuamente
 		while (true) {
 			try {
-                //System.out.println("El estudiante " + nombre + " ha llegado a la oficina");
                 if(silla3.availablePermits() == 0){
                     System.out.println("Estudiante "+nombre+": se fue a programar y volverá pronto.");
                     Thread.sleep(new Random().nextInt(2000) + 10000);
                 } else{
+                    // Gestionar las sillas
                     silla3.acquire();
-                    //Thread.sleep(new Random().nextInt(200) + 200);
-                    
                     
                     silla2.acquire();
                     silla3.release();
-                    //Thread.sleep(new Random().nextInt(200) + 200);
 
                     silla1.acquire();
                     silla2.release();
-                    //Thread.sleep(new Random().nextInt(200) + 200);
-                    
-                    
 
+                    // Si no hay sillas disponibles, esperar
                     if(sillaMonitor.availablePermits() == 0){
                         System.out.println("Estudiante " + nombre + ": Acaba de llegar y está esperando en una silla");
                     }
@@ -48,6 +47,7 @@ public class Estudiante extends Thread{
                     sillaMonitor.acquire();
                     silla1.release();
                     
+                    // Recibir ayuda del monitor y liberar la silla
                     System.out.println("Estudiante "+ nombre + ": Recibiendo ayuda del monitor");
                     Thread.sleep(new Random().nextInt(2000) + 0);
                     System.out.println("> [EXIT] Estudiante " + nombre + ": Ya ha terminado. Se va pa su casa");

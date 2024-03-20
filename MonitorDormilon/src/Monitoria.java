@@ -1,27 +1,42 @@
 //MONITOR DORMILON 
-//autores: Luis Fernando Botero, Juan Camilo Gonzalez, Gabriel Restrepo. 
-
+/*
+	Autores: 
+	Luis Fernando Botero, 
+	Juan Camilo Gonzalez, 
+	Gabriel Restrepo. 
+*/
 import java.util.concurrent.Semaphore;
-
+/**
+ * Clase principal que ejecuta el programa
+ */
 public class Monitoria{
+	/**
+	 * Método principal del programa
+	 * @param args Argumentos de la línea de comandos
+	 */
 	public static void main(String[] args) {
 
-
-		// Instanciar los semáforos requeridos
+		// Declaración de variables
 		Semaphore silla1;
 		Semaphore silla2;
 		Semaphore silla3;
 		Semaphore sillaMonitor;
+
+		// Creación de objetos
 		Monitor monitor;
-		int numeroEstudiantes=7;
-		Estudiante estudiantes[]=new Estudiante[numeroEstudiantes];
-		
 		silla1 = new Semaphore(1, true);
 		silla2 = new Semaphore(1, true);
 		silla3 = new Semaphore(1, true);
 		sillaMonitor = new Semaphore(1, true);
 		
+		// Creación de estudiantes
+		int numeroEstudiantes=7;
+		Estudiante estudiantes[]=new Estudiante[numeroEstudiantes];
+
+		// Creación de monitor
 		monitor = new Monitor(sillaMonitor, silla1, silla2, silla3);
+
+		// Inicialización de hilos
 		monitor.start();
 		for(int i=1; i<=numeroEstudiantes; i++){
 			estudiantes[i-1]=new Estudiante(sillaMonitor, silla1, silla2, silla3, i+"");
@@ -30,11 +45,15 @@ public class Monitoria{
 				Thread.sleep(500);
 			} catch(Exception e) {}
 		}
+
+		// Esperar a que todos los estudiantes terminen
 		while(true){
 			if(!estudiantes[estudiantes.length-1].isAlive()){
 				break;
 			}
 		}
+
+		// Detener el monitor
 		monitor.stopThread();
 	}
 }
