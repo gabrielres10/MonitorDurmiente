@@ -47,13 +47,14 @@ public class Monitoria{
 		}
 
 		// Esperar a que todos los estudiantes terminen
-		while(true){
-			if(!estudiantes[estudiantes.length-1].isAlive()){
-				break;
+		for (int i=numeroEstudiantes-1; i>=0; i--){
+			while(estudiantes[i].isAlive()){
+				;
 			}
 		}
 
 		// Detener el monitor
 		monitor.stopThread();
+
 	}
 }

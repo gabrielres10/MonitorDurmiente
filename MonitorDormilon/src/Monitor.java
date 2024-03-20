@@ -27,6 +27,7 @@ public class Monitor extends Thread{
         boolean flag = false;
         // Correr continuamente hasta que se interrumpa de forma externa
 		while (running) {
+            // Si las 3 sillas están libres, y el monitor está desocupado, el monitor se duerme
                 if(silla1.availablePermits()==1 && silla2.availablePermits()==1 && silla3.availablePermits()==1 && sillaMonitor.availablePermits()==1){
                     if(duerme){
                         System.out.println("---------------[ Monitor durmiendo ]---------------");
@@ -34,7 +35,7 @@ public class Monitor extends Thread{
                         flag = true;
                     }
                     
-                } else {
+                } else {  // Si alguna silla está ocupada, el monitor debe ser despertado
                     if(flag){
                         System.out.println("¡El estudiante despierta al monitor!");
                         flag=false;

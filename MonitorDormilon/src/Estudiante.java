@@ -41,16 +41,16 @@ public class Estudiante extends Thread{
 
                     // Si no hay sillas disponibles, esperar
                     if(sillaMonitor.availablePermits() == 0){
-                        System.out.println("Estudiante " + nombre + ": Acaba de llegar y está esperando en una silla");
+                        System.out.println("Estudiante " + nombre + ": Ha llegado y está esperando en una silla");
                     }
                     
                     sillaMonitor.acquire();
                     silla1.release();
-                    
+                    Thread.sleep(100); // Tiempo para que el monitor se de cuenta de que el estudiante está en la silla
                     // Recibir ayuda del monitor y liberar la silla
-                    System.out.println("Estudiante "+ nombre + ": Recibiendo ayuda del monitor");
+                    System.out.println("--help-- Estudiante "+ nombre + ": Recibiendo ayuda del monitor");
                     Thread.sleep(new Random().nextInt(2000) + 0);
-                    System.out.println("> [EXIT] Estudiante " + nombre + ": Ya ha terminado. Se va pa su casa");
+                    System.out.println(" > [EXIT] Estudiante " + nombre + ": Ya ha terminado. Se va a casa.");
                     sillaMonitor.release();
                     break;
                 }
